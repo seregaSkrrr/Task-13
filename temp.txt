@@ -1,0 +1,71 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+int LineCount() {
+    ifstream file("LOX.txt");
+    int lineCount = 0;
+    char c;
+    while (file.get(c)) {
+        if (c == '\n') {
+            lineCount++;
+        }
+    }
+    return lineCount;
+}
+
+void copy_file() {
+    ifstream src_file("LOX.txt", ios::binary);
+    ofstream dest_file("2.txt", ios::binary);
+
+    dest_file << src_file.rdbuf();
+
+    cout << "File copy completed successfully." << endl;
+}
+
+void InsertNums() {
+    ifstream inputFile("2.txt");
+
+    vector<int> numbers;
+    int num;
+    while (inputFile >> num) {
+        numbers.push_back(num);
+    }
+    inputFile.close();
+
+    for (int i = 0; i < numbers.size() - 1; i++) {
+        for (int j = 0; j < numbers.size() - 1 - i; j++) {
+            if (numbers[j] > numbers[j + 1]) {
+                swap(numbers[j], numbers[j + 1]);
+            }
+        }
+    }
+
+    ofstream outputFile("2.txt");
+    if (!outputFile.is_open()) {
+        cerr << "Unable to open the file " << "2.txt" << endl;
+        return ;
+    }
+
+    for (const auto& num : numbers) {
+        outputFile << num << " ";
+    }
+    outputFile.close();
+}
+
+void PlusFiles() {
+    ifstream file1("LOX.txt");
+    ifstream file2("2.txt");
+
+
+}
+
+int main()
+{
+    setlocale(LC_ALL, "");
+    //cout << "Количество строк = " << LineCount()<<endl;
+    //copy_file();
+    //InsertNums();
+
+}
